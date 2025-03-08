@@ -6,36 +6,37 @@ namespace SortGroupChallenge.Models;
 public sealed class Game
 {
     private readonly Deck _deck;
-    private readonly int _maxRoundCount;
     private readonly Queue<Card> _table;
     private readonly IEnumerable<Player> _players;
 
-    private Game(Deck deck, IEnumerable<Player> players, int maxRoundCount)
+    private Game(Deck deck, IEnumerable<Player> players)
     {
         _deck = deck;
         _players = players;
-        _maxRoundCount = maxRoundCount;
         _table = [];
     }
 
-    public static Game Create(Deck deck, int maxPlayerCount, int maxRoundCount)
+    public static Game Create(Deck deck, int maxPlayerCount)
     {
         ArgumentNullException.ThrowIfNull(deck, nameof(deck));
 
         Deck shuffledDeck = deck.Shuffle(new Shuffler());
         IEnumerable<Player> players = CreatePlayers(maxPlayerCount);
 
-        return new(shuffledDeck, players, maxRoundCount);
+        return new(shuffledDeck, players);
     }
 
-    public void Play()
+    public void Play(
+        IGameRoundService gameRoundService,
+        IRoundsCalculator roundsCalculator,
+        IWinnerAnnouncer winnerAnnouncer)
     {
-        Deal();
+        ArgumentNullException.ThrowIfNull(gameRoundService, nameof(gameRoundService));
+        ArgumentNullException.ThrowIfNull(roundsCalculator, nameof(roundsCalculator));
+        ArgumentNullException.ThrowIfNull(winnerAnnouncer, nameof(winnerAnnouncer));
 
-        Start(
-            snapService: StandardSnapService.Create(_table),
-            roundsCalculator: StandardRoundsCalculator.Create(_maxRoundCount),
-            winnerAnnouncer: StandardWinnerAnnouncer.Create());
+        Deal();
+        Start(gameRoundService, roundsCalculator, winnerAnnouncer);
     }
 
     private static IEnumerable<Player> CreatePlayers(int maxPlayerCount)
@@ -57,7 +58,7 @@ public sealed class Game
     }
 
     private void Start(
-        ISnapService snapService,
+        IGameRoundService gameRoundService,
         IRoundsCalculator roundsCalculator,
         IWinnerAnnouncer winnerAnnouncer)
     {
@@ -69,23 +70,18 @@ public sealed class Game
 
             foreach (Player player in _players)
             {
-                if (ProcessPlayerTurn(player, snapService))
+                if (!gameRoundService.HasGameEndedAfterTurn(_table, player))
                 {
-                    winnerAnnouncer.AnnounceWinnerFrom(_players);
-
-                    return;
+                    continue;
                 }
+
+                winnerAnnouncer.AnnounceWinnerFrom(_players);
+
+                return;
             }
         }
 
         winnerAnnouncer.AnnounceWinnerFrom(_players);
-    }
-
-    private bool ProcessPlayerTurn(Player player, ISnapService snapService)
-    {
-        var gameRoundService = StandardGameRoundService.Create(_table, player);
-
-        return gameRoundService.HasGameEndedAfterTurn(snapService);
     }
 
     private bool ShouldPlayRound(IRoundsCalculator roundsCalculator, int round)

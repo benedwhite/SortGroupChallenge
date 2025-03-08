@@ -1,6 +1,7 @@
-﻿namespace SortGroupChallenge.Services.Interfaces;
+﻿
+using SortGroupChallenge.Models;
 
 public interface IGameRoundService
 {
-    public bool HasGameEndedAfterTurn(ISnapService snapService);
+    bool HasGameEndedAfterTurn(Queue<Card> table, Player player);
 }

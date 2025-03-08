@@ -1,38 +1,40 @@
 ﻿using SortGroupChallenge.Models;
-using SortGroupChallenge.Services.Interfaces;
 
 namespace SortGroupChallenge.Services;
 
 public sealed class StandardGameRoundService : IGameRoundService
 {
-    private readonly Queue<Card> _table;
-    private readonly Player _player;
+    private StandardGameRoundService() { }
 
-    private StandardGameRoundService(Queue<Card> table, Player player)
-    {
-        _table = table;
-        _player = player;
-    }
+    public static StandardGameRoundService Create() => new();
 
-    public static StandardGameRoundService Create(Queue<Card> table, Player player)
+    public bool HasGameEndedAfterTurn(Queue<Card> table, Player player)
     {
-        ArgumentNullException.ThrowIfNull(table, nameof(table));
         ArgumentNullException.ThrowIfNull(player, nameof(player));
 
-        return new(table, player);
-    }
-
-    public bool HasGameEndedAfterTurn(ISnapService snapService)
-    {
-        if (_player.HasEmptyHand())
+        if (player.HasEmptyHand())
         {
             return true;
         }
 
-        if (snapService.Snap(_player))
+        Card? playedCard = player.PlayCard();
+        Card? cardOnTable = table.LastOrDefault();
+
+        if (playedCard is null)
         {
-            _player.Pickup(_table);
-            _table.Clear();
+            return false;
+        }
+
+        table.Enqueue(playedCard);
+
+        var snap = cardOnTable is not null ?
+            playedCard.Matches(RankMatcher.Create(cardOnTable)) :
+            false;
+
+        if (snap)
+        {
+            player.Pickup(table);
+            table.Clear();
         }
 
         return false;
