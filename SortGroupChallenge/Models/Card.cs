@@ -1,4 +1,6 @@
-﻿namespace SortGroupChallenge.Models;
+﻿using SortGroupChallenge.Services.Interfaces;
+
+namespace SortGroupChallenge.Models;
 
 public sealed record Card
 {
@@ -17,5 +19,12 @@ public sealed record Card
         ArgumentNullException.ThrowIfNull(rank, nameof(rank));
 
         return new(suit, rank);
+    }
+
+    public bool Matches(ICardMatcher cardMatcher)
+    {
+        ArgumentNullException.ThrowIfNull(cardMatcher, nameof(cardMatcher));
+
+        return cardMatcher.Matches(this);
     }
 }

@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json.Bson;
-using SortGroupChallenge;
+﻿using SortGroupChallenge;
 using SortGroupChallenge.Models;
 
 namespace SortGroupChallengeTests.Models;
@@ -85,10 +84,10 @@ public class CardTests
         Suit suit = suitValue is not null ? Suit.Create(suitValue) : null!;
         Rank rank = rankValue is not null ? Rank.Create(rankValue) : null!;
         Card sut = default!;
-        
+
         // Act
         var exception = Record.Exception(() => sut = Card.Create(suit, rank));
-        
+
         // Assert
         Assert.Null(sut);
         Assert.IsType<ArgumentNullException>(exception);

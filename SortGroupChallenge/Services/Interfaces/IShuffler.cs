@@ -1,6 +1,6 @@
 ﻿using SortGroupChallenge.Models;
 
-namespace SortGroupChallenge.Services;
+namespace SortGroupChallenge.Services.Interfaces;
 
 public interface IShuffler
 {

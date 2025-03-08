@@ -1,4 +1,5 @@
 ﻿using SortGroupChallenge.Models;
+using SortGroupChallenge.Services.Interfaces;
 
 namespace SortGroupChallenge.Services;
 
@@ -8,8 +9,8 @@ public sealed class Shuffler : IShuffler
     {
         ArgumentNullException.ThrowIfNull(cards, nameof(cards));
 
-        Random random = new();
-
-        return cards.OrderBy(_ => random.Next());
+        return cards
+            .OrderBy(_ => Guid.NewGuid())
+            .ToList();
     }
 }
