@@ -6,4 +6,4 @@ It is a **class library**, driven by **unit tests** to validate the game's funct
 
 ## GitHub Actions  
 The project is integrated with **GitHub Actions** for continuous integration.  
-You can see the latest build and test results [![Build & Test](HERE)](https://github.com/benedwhite/SortGroupChallenge/actions)
+You can see the latest build and test results [HERE](https://github.com/benedwhite/SortGroupChallenge/actions)
