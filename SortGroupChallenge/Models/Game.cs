@@ -35,7 +35,7 @@ public sealed class Game
         Start(
             snapService: StandardSnapService.Create(_table),
             roundsCalculator: StandardRoundsCalculator.Create(_maxRoundCount),
-            winnerAnnouncer: StandWinnerAnnouncer.Create());
+            winnerAnnouncer: StandardWinnerAnnouncer.Create());
     }
 
     private static IEnumerable<Player> CreatePlayers(int maxPlayerCount)

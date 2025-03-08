@@ -3,13 +3,13 @@ using SortGroupChallenge.Services.Interfaces;
 
 namespace SortGroupChallenge.Services;
 
-public sealed class StandWinnerAnnouncer : IWinnerAnnouncer
+public sealed class StandardWinnerAnnouncer : IWinnerAnnouncer
 {
     public event EventHandler<Player?>? PlayerWon;
 
-    private StandWinnerAnnouncer() { }
+    private StandardWinnerAnnouncer() { }
 
-    public static StandWinnerAnnouncer Create() => new();
+    public static StandardWinnerAnnouncer Create() => new();
 
     public void AnnounceWinnerFrom(IEnumerable<Player> players)
     {
