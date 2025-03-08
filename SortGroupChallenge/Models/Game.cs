@@ -8,8 +8,6 @@ public sealed class Game
     private readonly Deck _deck;
     private readonly Queue<Card> _table;
 
-    public event EventHandler<Player>? PlayerWon;
-
     private Game(IEnumerable<Player> players, Deck deck)
     {
         _players = players;
@@ -33,20 +31,23 @@ public sealed class Game
 
         dealer.Deal();
 
-        var gameRoundService = StandardGameRoundService.Create(_table);
-
-        Play(gameRoundService);
+        Play();
     }
 
-    private void Play(StandardGameRoundService gameRoundService)
+    private void Play()
     {
-        while (CanPlay())
+        var snapService = StandardSnapService.Create(_table);
+        var announcerService = StandWinnerAnnouncer.Create();
+
+        while (AnyPlayerHasCardsLeft())
         {
             foreach (Player player in _players)
             {
-                if (gameRoundService.PlayerHasWon(player))
+                var gameRoundService = StandardGameRoundService.Create(_table, player);
+
+                if (gameRoundService.HasGameEndedAfterTurn(snapService))
                 {
-                    PlayerWon?.Invoke(this, player);
+                    announcerService.AnnounceWinnerFrom(_players);
 
                     return;
                 }
@@ -54,5 +55,5 @@ public sealed class Game
         }
     }
 
-    private bool CanPlay() => _players.Any(p => p.HasCards());
+    private bool AnyPlayerHasCardsLeft() => _players.Any(p => p.HasCards());
 }

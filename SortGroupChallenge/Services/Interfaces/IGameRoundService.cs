@@ -1,8 +1,6 @@
-﻿using SortGroupChallenge.Models;
-
-namespace SortGroupChallenge.Services.Interfaces;
+﻿namespace SortGroupChallenge.Services.Interfaces;
 
 public interface IGameRoundService
 {
-    bool PlayerHasWon(Player player);
+    public bool HasGameEndedAfterTurn(ISnapService snapService);
 }

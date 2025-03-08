@@ -6,38 +6,34 @@ namespace SortGroupChallenge.Services;
 public sealed class StandardGameRoundService : IGameRoundService
 {
     private readonly Queue<Card> _table;
+    private readonly Player _player;
 
-    private StandardGameRoundService(Queue<Card> table) => _table = table;
-
-    public static StandardGameRoundService Create(Queue<Card> table)
+    private StandardGameRoundService(Queue<Card> table, Player player)
     {
-        ArgumentNullException.ThrowIfNull(table, nameof(table));
-
-        return new(table);
+        _table = table;
+        _player = player;
     }
 
-    public bool PlayerHasWon(Player player)
+    public static StandardGameRoundService Create(Queue<Card> table, Player player)
     {
-        Card playedCard = player.PlayCard();
-        Card? cardOnTable = _table.LastOrDefault();
+        ArgumentNullException.ThrowIfNull(table, nameof(table));
+        ArgumentNullException.ThrowIfNull(player, nameof(player));
 
-        if (cardOnTable is null)
+        return new(table, player);
+    }
+
+    public bool HasGameEndedAfterTurn(ISnapService snapService)
+    {
+        if (_player.HasEmptyHand())
         {
-            _table.Enqueue(playedCard);
-
-            return false;
-        }
-
-        bool snap = playedCard.Matches(RankMatcher.Create(cardOnTable));
-
-        if (snap)
-        {
-            _table.Clear();
-
             return true;
         }
 
-        _table.Enqueue(playedCard);
+        if (snapService.Snap(_player))
+        {
+            _player.Pickup(_table);
+            _table.Clear();
+        }
 
         return false;
     }

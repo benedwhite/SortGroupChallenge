@@ -29,7 +29,7 @@ public sealed class StandardDealer : IDealer
 
         foreach (var player in _players)
         {
-            player.DealHand(
+            player.Pickup(
                 _deck.Cards
                     .Skip(playerIndex * cardsPerPlayer)
                     .Take(cardsPerPlayer));

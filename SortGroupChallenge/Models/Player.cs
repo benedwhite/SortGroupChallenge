@@ -17,7 +17,7 @@ public sealed record Player
 
     public override string ToString() => Name;
 
-    public void DealHand(IEnumerable<Card> cards)
+    public void Pickup(IEnumerable<Card> cards)
     {
         ArgumentNullException.ThrowIfNull(cards, nameof(cards));
 
@@ -27,7 +27,11 @@ public sealed record Player
         }
     }
 
-    public Card PlayCard() => _hand.Pop();
+    public Card? PlayCard() => _hand.TryPop(out Card? card) ? card : null;
 
-    public bool HasCards() => _hand.Count > 0;
+    public int HandCount() => _hand.Count;
+
+    public bool HasCards() => HandCount() > 0;
+
+    public bool HasEmptyHand() => HandCount() == 0;
 }
