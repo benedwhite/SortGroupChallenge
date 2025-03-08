@@ -13,8 +13,12 @@ public class GameTests
             Player.Create("Player 2")
         ];
 
-        Game sut = Game.Create(players, Deck.Create());
+        Game sut = Game.Create(
+            Deck.Create(),
+            maxPlayerCount: 3,
+            maxRoundCount: 20);
 
         // Act
+        sut.Play();
     }
 }

@@ -26,5 +26,8 @@ public class ConstantsTests
         Assert.Equal(Constants.Rank.Jack, "Jack");
         Assert.Equal(Constants.Rank.Queen, "Queen");
         Assert.Equal(Constants.Rank.King, "King");
+
+        Assert.Equal(Constants.Player.MinPlayerCount, 2);
+        Assert.Equal(Constants.Player.MaxPlayerCount, 4);
     }
 }

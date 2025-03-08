@@ -26,4 +26,10 @@ public static class Constants
         public const string Queen = "Queen";
         public const string King = "King";
     }
+
+    public static class Player
+    {
+        public const int MinPlayerCount = 2;
+        public const int MaxPlayerCount = 4;
+    }
 }

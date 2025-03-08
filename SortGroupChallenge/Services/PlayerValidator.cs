@@ -5,29 +5,13 @@ namespace SortGroupChallenge.Services;
 
 public sealed class PlayerValidator : IGameValidator
 {
-    private const uint MinPlayerCount = 2;
-    private const uint MaxPlayerCount = 4;
+    private readonly int _numberOfPlayersToCreate;
 
-    private readonly IEnumerable<Player> _players;
+    private PlayerValidator(int numberOfPlayersToCreate)
+        => _numberOfPlayersToCreate = numberOfPlayersToCreate;
 
-    private PlayerValidator (IEnumerable<Player> players) => _players = players;
+    public static PlayerValidator Create(int numberOfPlayersToCreate) => new(numberOfPlayersToCreate);
 
-    public static PlayerValidator Create(IEnumerable<Player> players)
-    {
-        ArgumentNullException.ThrowIfNull(players, nameof(players));
-
-        return new(players);
-    }
-
-    public bool IsValid()
-    {
-        int playerCount = _players.Count();
-
-        if (playerCount < MinPlayerCount || playerCount > MaxPlayerCount)
-        {
-            return false;
-        }
-
-        return true;
-    }
+    public bool IsValid() => _numberOfPlayersToCreate >= Constants.Player.MinPlayerCount 
+        && _numberOfPlayersToCreate < Constants.Player.MaxPlayerCount;
 }

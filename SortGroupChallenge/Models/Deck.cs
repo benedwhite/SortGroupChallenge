@@ -26,4 +26,6 @@ public sealed class Deck
 
         return new(shuffledCards);
     }
+
+    public int Count() => Cards.Count();
 }

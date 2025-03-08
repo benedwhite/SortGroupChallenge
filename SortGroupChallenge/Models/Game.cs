@@ -1,59 +1,93 @@
 ﻿using SortGroupChallenge.Services;
+using SortGroupChallenge.Services.Interfaces;
 
 namespace SortGroupChallenge.Models;
 
 public sealed class Game
 {
-    private readonly IEnumerable<Player> _players;
     private readonly Deck _deck;
+    private readonly int _maxRoundCount;
     private readonly Queue<Card> _table;
+    private readonly IEnumerable<Player> _players;
 
-    private Game(IEnumerable<Player> players, Deck deck)
+    private Game(Deck deck, IEnumerable<Player> players, int maxRoundCount)
     {
-        _players = players;
         _deck = deck;
+        _players = players;
+        _maxRoundCount = maxRoundCount;
         _table = [];
     }
 
-    public static Game Create(IEnumerable<Player> players, Deck deck)
+    public static Game Create(Deck deck, int maxPlayerCount, int maxRoundCount)
     {
-        ArgumentNullException.ThrowIfNull(players, nameof(players));
         ArgumentNullException.ThrowIfNull(deck, nameof(deck));
 
         Deck shuffledDeck = deck.Shuffle(new Shuffler());
+        IEnumerable<Player> players = CreatePlayers(maxPlayerCount);
 
-        return new(players, shuffledDeck);
+        return new(shuffledDeck, players, maxRoundCount);
     }
 
-    public void Start()
+    public void Play()
     {
-        var dealer = StandardDealer.Create(_players, _deck);
+        Deal();
 
+        Start(
+            snapService: StandardSnapService.Create(_table),
+            roundsCalculator: StandardRoundsCalculator.Create(_maxRoundCount),
+            winnerAnnouncer: StandWinnerAnnouncer.Create());
+    }
+
+    private static IEnumerable<Player> CreatePlayers(int maxPlayerCount)
+    {
+        var playerFactory = StandardPlayerFactory.Create(
+            PlayerValidator.Create(maxPlayerCount));
+
+        IEnumerable<Player> players = playerFactory
+            .CreateMany(maxPlayerCount)
+            .ToList();
+
+        return players;
+    }
+
+    private void Deal()
+    {
+        var dealer = StandardDealer.Create(_table, _players, _deck);
         dealer.Deal();
-
-        Play();
     }
 
-    private void Play()
+    private void Start(
+        ISnapService snapService,
+        IRoundsCalculator roundsCalculator,
+        IWinnerAnnouncer winnerAnnouncer)
     {
-        var snapService = StandardSnapService.Create(_table);
-        var announcerService = StandWinnerAnnouncer.Create();
+        int round = 0;
 
-        while (AnyPlayerHasCardsLeft())
+        while (ShouldPlayRound(roundsCalculator, round))
         {
+            round++;
+
             foreach (Player player in _players)
             {
-                var gameRoundService = StandardGameRoundService.Create(_table, player);
-
-                if (gameRoundService.HasGameEndedAfterTurn(snapService))
+                if (ProcessPlayerTurn(player, snapService))
                 {
-                    announcerService.AnnounceWinnerFrom(_players);
+                    winnerAnnouncer.AnnounceWinnerFrom(_players);
 
                     return;
                 }
             }
         }
+
+        winnerAnnouncer.AnnounceWinnerFrom(_players);
     }
 
-    private bool AnyPlayerHasCardsLeft() => _players.Any(p => p.HasCards());
+    private bool ProcessPlayerTurn(Player player, ISnapService snapService)
+    {
+        var gameRoundService = StandardGameRoundService.Create(_table, player);
+
+        return gameRoundService.HasGameEndedAfterTurn(snapService);
+    }
+
+    private bool ShouldPlayRound(IRoundsCalculator roundsCalculator, int round)
+        => _players.Any(p => p.HasCards()) && roundsCalculator.RoundsCompleted(round);
 }
