@@ -4,7 +4,7 @@ public sealed record Player
 {
     private string Name { get; } = string.Empty;
 
-    private Stack<Card> _hand = new();
+    private readonly Stack<Card> _hand = new();
 
     private Player(string name) => Name = name;
 
@@ -27,7 +27,7 @@ public sealed record Player
         }
     }
 
-    public Card? PlayCard() => _hand.TryPop(out Card? card) ? card : null;
+    public Card PlayCard() => _hand.Pop();
 
     public int HandCount() => _hand.Count;
 

@@ -6,14 +6,14 @@ namespace SortGroupChallenge.Models;
 public sealed class Game
 {
     private readonly Deck _deck;
-    private readonly Queue<Card> _table;
     private readonly IEnumerable<Player> _players;
+    private readonly Table _table;
 
     private Game(Deck deck, IEnumerable<Player> players)
     {
         _deck = deck;
         _players = players;
-        _table = [];
+        _table = Table.Create();
     }
 
     public static Game Create(Deck deck, int maxPlayerCount)
@@ -35,8 +35,8 @@ public sealed class Game
         ArgumentNullException.ThrowIfNull(roundsCalculator, nameof(roundsCalculator));
         ArgumentNullException.ThrowIfNull(winnerAnnouncer, nameof(winnerAnnouncer));
 
-        Deal();
-        Start(gameRoundService, roundsCalculator, winnerAnnouncer);
+        DealCardsToPlayers();
+        StartGame(gameRoundService, roundsCalculator, winnerAnnouncer);
     }
 
     private static IEnumerable<Player> CreatePlayers(int maxPlayerCount)
@@ -49,13 +49,14 @@ public sealed class Game
         return players;
     }
 
-    private void Deal()
+    private void DealCardsToPlayers()
     {
         var dealer = StandardDealer.Create(_table, _players, _deck);
+
         dealer.Deal();
     }
 
-    private void Start(
+    private void StartGame(
         IGameRoundService gameRoundService,
         IRoundsCalculator roundsCalculator,
         IWinnerAnnouncer winnerAnnouncer)

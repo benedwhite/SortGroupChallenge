@@ -1,5 +1,6 @@
 ﻿using Moq;
 using SortGroupChallenge.Models;
+using SortGroupChallenge.Services;
 using SortGroupChallenge.Services.Interfaces;
 
 namespace SortGroupChallengeTests.Models;
@@ -46,7 +47,7 @@ public class GameTests
             .Returns(true);
 
         mockGameRoundService.SetupSequence(g => g.HasGameEndedAfterTurn(
-            It.IsAny<Queue<Card>>(),
+            It.IsAny<Table>(),
             It.IsAny<Player>()))
             .Returns(false)
             .Returns(true);
@@ -59,15 +60,15 @@ public class GameTests
 
         // Assert
         mockRoundsCalculator.Verify(r => r.IsWithinRoundLimit(
-            It.IsAny<int>()), 
+            It.IsAny<int>()),
             Times.Once());
-        
+
         mockGameRoundService.Verify(g => g.HasGameEndedAfterTurn(
-            It.IsAny<Queue<Card>>(),
+            It.IsAny<Table>(),
             It.IsAny<Player>()), Times.Exactly(2));
-        
+
         mockWinnerAnnouncer.Verify(w => w.AnnounceWinnerFrom(
-            It.IsAny<IEnumerable<Player>>()), 
+            It.IsAny<IEnumerable<Player>>()),
             Times.Once());
     }
 }

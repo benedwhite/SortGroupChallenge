@@ -9,7 +9,7 @@ public sealed class StandardGameRoundService : IGameRoundService
 
     public static StandardGameRoundService Create() => new();
 
-    public bool HasGameEndedAfterTurn(Queue<Card> table, Player player)
+    public bool HasGameEndedAfterTurn(Table table, Player player)
     {
         ArgumentNullException.ThrowIfNull(player, nameof(player));
 
@@ -18,25 +18,31 @@ public sealed class StandardGameRoundService : IGameRoundService
             return true;
         }
 
-        Card? playedCard = player.PlayCard();
-        Card? cardOnTable = table.LastOrDefault();
+        Card playedCard = player.PlayCard();
+        Card? cardOnTable = table.TryPickupCard();
 
-        if (playedCard is null)
-        {
-            return false;
-        }
+        table.AddCard(playedCard);
 
-        table.Enqueue(playedCard);
+        HandleSnap(table, player, playedCard, cardOnTable);
 
+        return false;
+    }
+
+    private static void HandleSnap(
+        Table table, 
+        Player player, 
+        Card playedCard, 
+        Card? cardOnTable)
+    {
         bool snap = cardOnTable is not null
             && playedCard.Matches(RankMatcher.Create(cardOnTable));
 
-        if (snap)
+        if (!snap)
         {
-            player.Pickup(table);
-            table.Clear();
+            return;
         }
 
-        return false;
+        player.Pickup(table.GetCards());
+        table.ClearCards();
     }
 }

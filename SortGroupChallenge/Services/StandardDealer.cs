@@ -5,12 +5,12 @@ namespace SortGroupChallenge.Services;
 
 public sealed class StandardDealer : IDealer
 {
-    private readonly Queue<Card> _table;
+    private readonly Table _table;
     private readonly IEnumerable<Player> _players;
     private readonly Deck _deck;
 
     private StandardDealer(
-        Queue<Card> table,
+        Table table,
         IEnumerable<Player> players, 
         Deck deck)
     {
@@ -20,7 +20,7 @@ public sealed class StandardDealer : IDealer
     }
 
     public static StandardDealer Create(
-        Queue<Card> table, 
+        Table table, 
         IEnumerable<Player> 
         players, Deck deck)
     {
@@ -64,6 +64,6 @@ public sealed class StandardDealer : IDealer
             .Skip(cardsToSkip)
             .Take(remainder)
             .ToList()
-            .ForEach(_table.Enqueue);
+            .ForEach(_table.AddCard);
     }
 }

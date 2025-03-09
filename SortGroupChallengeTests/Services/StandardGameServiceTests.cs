@@ -12,7 +12,7 @@ public class StandardGameRoundServiceTests
         // Arrange
         var service = StandardGameRoundService.Create();
         var player = Player.Create("TestPlayer");
-        var table = new Queue<Card>();
+        var table = Table.Create();
 
         // Act
         bool result = service.HasGameEndedAfterTurn(table, player);
@@ -27,7 +27,7 @@ public class StandardGameRoundServiceTests
         // Arrange
         var service = StandardGameRoundService.Create();
         var player = Player.Create("TestPlayer");
-        var table = new Queue<Card>();
+        var table = Table.Create();
 
         player.Pickup([
             Card.Create(
@@ -39,7 +39,7 @@ public class StandardGameRoundServiceTests
 
         // Assert
         Assert.False(result);
-        Assert.Single(table);
+        Assert.Single(table.GetCards());
     }
 
     [Fact]
@@ -54,9 +54,9 @@ public class StandardGameRoundServiceTests
                 Suit.Create(Constants.Suit.Spades),
                 Rank.Create(Constants.Rank.Ace))]);
 
-        var table = new Queue<Card>();
+        var table = Table.Create();
 
-        table.Enqueue(Card.Create(
+        table.AddCard(Card.Create(
             Suit.Create(Constants.Suit.Diamonds),
             Rank.Create(Constants.Rank.Ace)));
 
@@ -66,7 +66,7 @@ public class StandardGameRoundServiceTests
         // Assert
         Assert.Equal(2, player.HandCount());
         Assert.False(result);
-        Assert.Empty(table);
+        Assert.Empty(table.GetCards());
     }
 
     [Fact]
@@ -81,9 +81,9 @@ public class StandardGameRoundServiceTests
                 Suit.Create(Constants.Suit.Spades),
                 Rank.Create(Constants.Rank.Ace))]);
 
-        var table = new Queue<Card>();
+        var table = Table.Create();
 
-        table.Enqueue(Card.Create(
+        table.AddCard(Card.Create(
             Suit.Create(Constants.Suit.Diamonds),
             Rank.Create(Constants.Rank.Ten)));
 
@@ -92,6 +92,6 @@ public class StandardGameRoundServiceTests
 
         // Assert
         Assert.False(result);
-        Assert.Equal(2, table.Count);
+        Assert.Equal(2, table.CardCount());
     }
 }
