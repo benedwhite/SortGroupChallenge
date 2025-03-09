@@ -36,7 +36,7 @@ public sealed class StandardDealer : IDealer
         int cardsPerPlayer = _deck.Count() / _players.Count();
         int playerIndex = 0;
 
-        DealRemainderCards(cardsPerPlayer);
+        DealRemainingCards(cardsPerPlayer);
 
         foreach (Player player in _players)
         {
@@ -51,7 +51,7 @@ public sealed class StandardDealer : IDealer
         }
     }
 
-    private void DealRemainderCards(int cardsPerPlayer)
+    private void DealRemainingCards(int cardsPerPlayer)
     {
         int remainder = _deck.Count() % _players.Count();
 
