@@ -68,7 +68,7 @@ public class DeckTests
         var sut = Deck.Create();
 
         // Assert
-        Assert.True(sut.Cards.Count() == 52);
+        Assert.Equal(52, sut.Cards.Count());
         Assert.True(sut.Cards.SequenceEqual(_cards));
     }
 
@@ -79,7 +79,7 @@ public class DeckTests
         var sut = Deck.Create().Shuffle(new Shuffler());
 
         // Assert
-        Assert.True(sut.Cards.Count() == 52);
+        Assert.Equal(52, sut.Cards.Count());
         Assert.False(sut.Cards.SequenceEqual(_cards));
     }
 }

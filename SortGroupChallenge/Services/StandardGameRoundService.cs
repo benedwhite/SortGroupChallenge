@@ -1,4 +1,5 @@
 ﻿using SortGroupChallenge.Models;
+using SortGroupChallenge.Services.Interfaces;
 
 namespace SortGroupChallenge.Services;
 
@@ -27,9 +28,8 @@ public sealed class StandardGameRoundService : IGameRoundService
 
         table.Enqueue(playedCard);
 
-        var snap = cardOnTable is not null ?
-            playedCard.Matches(RankMatcher.Create(cardOnTable)) :
-            false;
+        var snap = cardOnTable is not null
+            && playedCard.Matches(RankMatcher.Create(cardOnTable));
 
         if (snap)
         {

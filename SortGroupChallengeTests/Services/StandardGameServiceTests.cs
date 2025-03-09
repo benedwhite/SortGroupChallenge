@@ -1,7 +1,6 @@
 ﻿using SortGroupChallenge;
 using SortGroupChallenge.Models;
 using SortGroupChallenge.Services;
-using System;
 
 namespace SortGroupChallengeTests.Services;
 

@@ -71,7 +71,7 @@ public class ShufflerTests
         var sut = shuffler.Shuffle(cards);
 
         // Assert
-        Assert.True(sut.Count() == 52);
+        Assert.Equal(52, sut.Count());
         Assert.False(sut.SequenceEqual(cards));
     }
 }

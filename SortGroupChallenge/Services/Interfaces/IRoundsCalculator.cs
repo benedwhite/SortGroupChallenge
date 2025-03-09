@@ -2,5 +2,5 @@
 
 public interface IRoundsCalculator
 {
-    bool RoundsCompleted(int round);
+    bool IsWithinRoundLimit(int round);
 }

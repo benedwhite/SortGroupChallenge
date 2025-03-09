@@ -18,13 +18,13 @@ public sealed class StandardRoundsCalculator : IRoundsCalculator
         return new(maxRounds);
     }
 
-    public bool RoundsCompleted(int round)
+    public bool IsWithinRoundLimit(int round)
     {
-        if (round < 0)
+        if (round <= 0)
         {
-            throw new ArgumentOutOfRangeException(nameof(round), "Round cannot be negative.");
+            throw new ArgumentOutOfRangeException(nameof(round), "Round must be greater than 0.");
         }
 
-        return round < _maxRounds;
+        return round <= _maxRounds;
     }
 }

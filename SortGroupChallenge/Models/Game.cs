@@ -44,9 +44,7 @@ public sealed class Game
         var playerFactory = StandardPlayerFactory.Create(
             PlayerValidator.Create(maxPlayerCount));
 
-        IEnumerable<Player> players = playerFactory
-            .CreateMany(maxPlayerCount)
-            .ToList();
+        IEnumerable<Player> players = [.. playerFactory.CreateMany(maxPlayerCount)];
 
         return players;
     }
@@ -62,7 +60,7 @@ public sealed class Game
         IRoundsCalculator roundsCalculator,
         IWinnerAnnouncer winnerAnnouncer)
     {
-        int round = 0;
+        int round = 1;
 
         while (ShouldPlayRound(roundsCalculator, round))
         {
@@ -85,5 +83,5 @@ public sealed class Game
     }
 
     private bool ShouldPlayRound(IRoundsCalculator roundsCalculator, int round)
-        => _players.Any(p => p.HasCards()) && roundsCalculator.RoundsCompleted(round);
+        => _players.Any(p => p.HasCards()) && roundsCalculator.IsWithinRoundLimit(round);
 }

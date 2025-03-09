@@ -1,5 +1,4 @@
-﻿using SortGroupChallenge.Models;
-using SortGroupChallenge.Services.Interfaces;
+﻿using SortGroupChallenge.Services.Interfaces;
 
 namespace SortGroupChallenge.Services;
 
