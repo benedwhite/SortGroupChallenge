@@ -8,11 +8,6 @@ public sealed record Player
 
     private Player(string name)
     {
-        if (string.IsNullOrWhiteSpace(name))
-        {
-            throw new ArgumentException("Player name cannot be null or empty", nameof(name));
-        }
-
         _name = name;
         _hand = Cards.Create([]);
     }
