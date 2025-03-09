@@ -2,11 +2,20 @@
 
 public sealed record Player
 {
-    private string Name { get; } = string.Empty;
+    private readonly string _name;
 
-    private readonly Stack<Card> _hand = new();
+    private readonly Cards _hand;
 
-    private Player(string name) => Name = name;
+    private Player(string name)
+    {
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            throw new ArgumentException("Player name cannot be null or empty", nameof(name));
+        }
+
+        _name = name;
+        _hand = Cards.Create();
+    }
 
     public static Player Create(string name)
     {
@@ -15,7 +24,7 @@ public sealed record Player
         return new(name);
     }
 
-    public override string ToString() => Name;
+    public override string ToString() => _name;
 
     public void Pickup(IEnumerable<Card> cards)
     {

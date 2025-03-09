@@ -2,9 +2,12 @@
 
 public sealed record Table
 {
-    private readonly Stack<Card> _cards = [];
+    private readonly Cards _cards;
 
-    private Table() { }
+    private Table()
+    {
+        _cards = Cards.Create();
+    }
 
     public static Table Create() => new();
 
@@ -19,7 +22,7 @@ public sealed record Table
 
     public void ClearCards() => _cards.Clear();
 
-    public Stack<Card> GetCards() => _cards;
+    public Cards GetCards() => _cards;
 
     public int CardCount() => _cards.Count;
 }
