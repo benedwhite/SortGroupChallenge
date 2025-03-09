@@ -3,13 +3,9 @@ using SortGroupChallenge.Services.Interfaces;
 
 namespace SortGroupChallenge.Services;
 
-public sealed class StandardWinnerAnnouncer : IWinnerAnnouncer
+public sealed record WinnerAnnouncer : IWinnerAnnouncer
 {
     public event EventHandler<Player?>? PlayerWon;
-
-    private StandardWinnerAnnouncer() { }
-
-    public static StandardWinnerAnnouncer Create() => new();
 
     public void AnnounceWinnerFrom(Players players)
     {
@@ -34,8 +30,5 @@ public sealed class StandardWinnerAnnouncer : IWinnerAnnouncer
         RaiseEvent(winner);
     }
 
-    private void RaiseEvent(Player? winner)
-    {
-        PlayerWon?.Invoke(this, winner);
-    }
+    private void RaiseEvent(Player? winner) => PlayerWon?.Invoke(this, winner);
 }

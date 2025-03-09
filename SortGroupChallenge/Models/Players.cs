@@ -2,23 +2,9 @@
 
 namespace SortGroupChallenge.Models;
 
-public sealed record Players : IEnumerable<Player>
+public sealed record Players(IEnumerable<Player> Player) : IEnumerable<Player>
 {
-    private readonly IEnumerable<Player> _players;
-
-    private Players(IEnumerable<Player> players)
-    {
-        _players = [.. players];
-    }
-
-    public static Players Create(IEnumerable<Player> players)
-    {
-        ArgumentNullException.ThrowIfNull(players, nameof(players));
-
-        return new(players);
-    }
-
-    public IEnumerator<Player> GetEnumerator() => _players.GetEnumerator();
+    public IEnumerator<Player> GetEnumerator() => Player.GetEnumerator();
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 }

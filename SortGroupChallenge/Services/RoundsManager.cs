@@ -2,20 +2,18 @@
 
 namespace SortGroupChallenge.Services;
 
-public sealed class StandardRoundsCalculator : IRoundsCalculator
+public sealed class RoundsManager : IRoundsManager
 {
     private readonly int _maxRounds;
 
-    private StandardRoundsCalculator(int maxRounds) => _maxRounds = maxRounds;
-
-    public static StandardRoundsCalculator Create(int maxRounds)
+    public RoundsManager(int maxRounds)
     {
         if (maxRounds <= 0)
         {
             throw new ArgumentOutOfRangeException(nameof(maxRounds), "Max rounds must be greater than 0.");
         }
 
-        return new(maxRounds);
+        _maxRounds = maxRounds;
     }
 
     public bool IsWithinRoundLimit(int round)

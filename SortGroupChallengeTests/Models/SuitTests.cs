@@ -13,7 +13,7 @@ public class SuitTests
     public void Create_GivenAValidSuitValue_ReturnsExpectedSuit(string suitValue)
     {
         // Arrange && Act
-        var sut = Suit.Create(suitValue);
+        var sut = new Suit(suitValue);
 
         // Assert
         Assert.Equal(suitValue, sut.ToString());
@@ -32,7 +32,7 @@ public class SuitTests
         Suit sut = default!;
 
         // Act
-        Exception exception = Record.Exception(() => sut = Suit.Create(suitValue!));
+        Exception exception = Record.Exception(() => sut = new Suit(suitValue!));
 
         // Assert
         Assert.Null(sut);

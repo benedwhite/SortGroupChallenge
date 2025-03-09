@@ -4,12 +4,7 @@ public sealed record Table
 {
     private readonly Cards _cards;
 
-    private Table()
-    {
-        _cards = Cards.Create([]);
-    }
-
-    public static Table Create() => new();
+    public Table() => _cards = new Cards([]);
 
     public void AddCard(Card card)
     {

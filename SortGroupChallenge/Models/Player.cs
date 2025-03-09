@@ -1,22 +1,16 @@
 ﻿namespace SortGroupChallenge.Models;
 
-public sealed record Player
+public sealed class Player
 {
     private readonly string _name;
-
     private readonly Cards _hand;
 
-    private Player(string name)
-    {
-        _name = name;
-        _hand = Cards.Create([]);
-    }
-
-    public static Player Create(string name)
+    public Player(string name)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(name, nameof(name));
 
-        return new(name);
+        _name = name;
+        _hand = new Cards([]);
     }
 
     public override string ToString() => _name;

@@ -3,24 +3,24 @@
 public sealed record Suit
 {
     private readonly string _value;
-    private Suit(string value) => _value = value;
 
-    public static Suit Create(string value)
+    public Suit(string value)
     {
-        string? suitValue = AllSuits.FirstOrDefault(s => s == value);
-
-        return suitValue is not null ?
-            new(suitValue) :
+        if (!AllSuits.Contains(value))
+        {
             throw new ApplicationException($"{value} is not a valid value for suit");
+        }
+
+        _value = value;
     }
 
     public override string ToString() => _value;
 
-    public static readonly IReadOnlyCollection<string> AllSuits =
-    [
+    public static readonly IReadOnlyCollection<string> AllSuits = new HashSet<string>
+    {
         Constants.Suit.Hearts,
         Constants.Suit.Diamonds,
         Constants.Suit.Clubs,
         Constants.Suit.Spades
-    ];
+    };
 }

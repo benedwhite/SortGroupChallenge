@@ -22,7 +22,7 @@ public class RankTests
     public void Create_GivenAValidRankValue_ReturnsExpectedSuit(string rankValue)
     {
         // Arrange && Act
-        var sut = Rank.Create(rankValue);
+        var sut = new Rank(rankValue);
 
         // Assert
         Assert.Equal(rankValue, sut.ToString());
@@ -41,7 +41,7 @@ public class RankTests
         Suit sut = default!;
 
         // Act
-        Exception exception = Record.Exception(() => sut = Suit.Create(rankValue!));
+        Exception exception = Record.Exception(() => sut = new Suit(rankValue!));
 
         // Assert
         Assert.Null(sut);

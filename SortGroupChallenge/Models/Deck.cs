@@ -1,26 +1,13 @@
-﻿using SortGroupChallenge.Services.Interfaces;
+﻿using System.Collections.ObjectModel;
+using SortGroupChallenge.Services.Interfaces;
 
 namespace SortGroupChallenge.Models;
 
-public sealed class Deck
+public sealed record Deck(Cards Cards)
 {
-    public Cards Cards { get; }
+    public Deck() : this(new Cards(GenerateAllCards())) { }
 
-    private Deck(Cards cards) => Cards = cards;
-
-    public static Deck Create()
-    {
-        IEnumerable<Card> cards = Suit.AllSuits
-            .SelectMany(
-                suit => Rank.AllRanks,
-                (suit, rank) => Card.Create(
-                    Suit.Create(suit),
-                    Rank.Create(rank)));
-
-        var pack = Cards.Create(cards);
-
-        return new(pack);
-    }
+    public int Count => Cards.Count;
 
     public Deck Shuffle(IShuffler shuffler)
     {
@@ -31,5 +18,8 @@ public sealed class Deck
         return new(shuffledCards);
     }
 
-    public int Count() => Cards.Count;
+    private static IReadOnlyList<Card> GenerateAllCards() =>
+        [.. Suit.AllSuits.SelectMany(
+            suit => Rank.AllRanks,
+            (suit, rank) => new Card(new Suit(suit), new Rank(rank)))];
 }

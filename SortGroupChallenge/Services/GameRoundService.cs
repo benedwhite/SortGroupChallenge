@@ -3,12 +3,8 @@ using SortGroupChallenge.Services.Interfaces;
 
 namespace SortGroupChallenge.Services;
 
-public sealed class StandardGameRoundService : IGameRoundService
+public sealed record GameRoundService : IGameRoundService
 {
-    private StandardGameRoundService() { }
-
-    public static StandardGameRoundService Create() => new();
-
     public bool HasGameEndedAfterTurn(Table table, Player player)
     {
         ArgumentNullException.ThrowIfNull(player, nameof(player));
@@ -35,7 +31,7 @@ public sealed class StandardGameRoundService : IGameRoundService
         Card? topCardOnTable)
     {
         bool snap = topCardOnTable is not null
-            && playedCard.Matches(RankMatcher.Create(topCardOnTable));
+            && playedCard.Matches(new RankMatcher(topCardOnTable));
 
         if (!snap)
         {

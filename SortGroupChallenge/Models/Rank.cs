@@ -4,21 +4,20 @@ public sealed record Rank
 {
     private readonly string _value;
 
-    private Rank(string value) => _value = value;
-
-    public static Rank Create(string value)
+    public Rank(string value)
     {
-        string? rankValue = AllRanks.FirstOrDefault(r => r == value);
-
-        return rankValue is not null ?
-            new(rankValue) :
+        if (!AllRanks.Contains(value))
+        {
             throw new ApplicationException($"{value} is not a valid value for rank");
+        }
+
+        _value = value;
     }
 
     public override string ToString() => _value;
 
-    public static readonly IReadOnlyCollection<string> AllRanks =
-    [
+    public static readonly IReadOnlyCollection<string> AllRanks = new HashSet<string>
+    {
         Constants.Rank.Ace,
         Constants.Rank.Two,
         Constants.Rank.Three,
@@ -32,5 +31,5 @@ public sealed record Rank
         Constants.Rank.Jack,
         Constants.Rank.Queen,
         Constants.Rank.King
-    ];
+    };
 }

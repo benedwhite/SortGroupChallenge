@@ -61,36 +61,13 @@ public class CardTests
     public void Create_ShouldSetCorrectSuitAndRank(string suitValue, string rankValue)
     {
         // Arrange & Act
-        var sut = Card.Create(
-            Suit.Create(suitValue),
-            Rank.Create(rankValue)
+        var sut = new Card(
+            new Suit(suitValue),
+            new Rank(rankValue)
         );
 
         // Assert
         Assert.Equal(suitValue, sut.Suit.ToString());
         Assert.Equal(rankValue, sut.Rank.ToString());
-    }
-
-    [Theory]
-    [InlineData(null, Constants.Rank.Ace, "suit")]
-    [InlineData(Constants.Suit.Hearts, null, "rank")]
-    [InlineData(null, null, "suit")]
-    public void Create_ShouldThrowArgumentNullException_WhenSuitIsNull(
-        string? suitValue,
-        string? rankValue,
-        string errorValue)
-    {
-        // Arrange
-        Suit suit = suitValue is not null ? Suit.Create(suitValue) : null!;
-        Rank rank = rankValue is not null ? Rank.Create(rankValue) : null!;
-        Card sut = default!;
-
-        // Act
-        Exception exception = Record.Exception(() => sut = Card.Create(suit, rank));
-
-        // Assert
-        Assert.Null(sut);
-        Assert.IsType<ArgumentNullException>(exception);
-        Assert.Equal($"Value cannot be null. (Parameter '{errorValue}')", exception.Message);
     }
 }

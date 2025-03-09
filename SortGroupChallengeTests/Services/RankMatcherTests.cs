@@ -7,21 +7,14 @@ namespace SortGroupChallengeTests.Services;
 public class RankMatcherTests
 {
     [Fact]
-    public void Create_ShouldThrowArgumentNullException_WhenCardIsNull()
-    {
-        // Act & Assert
-        Assert.Throws<ArgumentNullException>(() => RankMatcher.Create(null!));
-    }
-
-    [Fact]
     public void Create_ShouldReturnRankMatcher_WhenCardIsValid()
     {
         // Arrange
-        var rank = Rank.Create(Constants.Rank.Ace);
-        var card = Card.Create(Suit.Create(Constants.Suit.Hearts), rank);
+        var rank = new Rank(Constants.Rank.Ace);
+        var card = new Card(new Suit(Constants.Suit.Hearts), rank);
 
         // Act
-        var rankMatcher = RankMatcher.Create(card);
+        var rankMatcher = new RankMatcher(card);
 
         // Assert
         Assert.NotNull(rankMatcher);
@@ -31,25 +24,25 @@ public class RankMatcherTests
     public void Matches_ShouldThrowArgumentNullException_WhenCardIsNull()
     {
         // Arrange
-        var rank = Rank.Create(Constants.Rank.Ace);
-        var card = Card.Create(Suit.Create(Constants.Suit.Hearts), rank);
-        var rankMatcher = RankMatcher.Create(card);
+        var rank = new Rank(Constants.Rank.Ace);
+        var card = new Card(new Suit(Constants.Suit.Hearts), rank);
+        var sut = new RankMatcher(card);
 
         // Act & Assert
-        Assert.Throws<ArgumentNullException>(() => rankMatcher.Matches(null!));
+        Assert.Throws<ArgumentNullException>(() => sut.Matches(null!));
     }
 
     [Fact]
     public void Matches_ShouldReturnTrue_WhenRanksMatch()
     {
         // Arrange
-        var rank = Rank.Create(Constants.Rank.Ace);
-        var card1 = Card.Create(Suit.Create(Constants.Suit.Hearts), rank);
-        var card2 = Card.Create(Suit.Create(Constants.Suit.Diamonds), rank);
-        var rankMatcher = RankMatcher.Create(card1);
+        var rank = new Rank(Constants.Rank.Ace);
+        var card1 = new Card(new Suit(Constants.Suit.Hearts), rank);
+        var card2 = new Card(new Suit(Constants.Suit.Diamonds), rank);
+        var sut = new RankMatcher(card1);
 
         // Act
-        bool result = rankMatcher.Matches(card2);
+        bool result = sut.Matches(card2);
 
         // Assert
         Assert.True(result);
@@ -59,14 +52,14 @@ public class RankMatcherTests
     public void Matches_ShouldReturnFalse_WhenRanksDoNotMatch()
     {
         // Arrange
-        var rank1 = Rank.Create(Constants.Rank.Ace);
-        var rank2 = Rank.Create(Constants.Rank.King);
-        var card1 = Card.Create(Suit.Create(Constants.Suit.Hearts), rank1);
-        var card2 = Card.Create(Suit.Create(Constants.Suit.Diamonds), rank2);
-        var rankMatcher = RankMatcher.Create(card1);
+        var rank1 = new Rank(Constants.Rank.Ace);
+        var rank2 = new Rank(Constants.Rank.King);
+        var card1 = new Card(new Suit(Constants.Suit.Hearts), rank1);
+        var card2 = new Card(new Suit(Constants.Suit.Diamonds), rank2);
+        var sut = new RankMatcher(card1);
 
         // Act
-        bool result = rankMatcher.Matches(card2);
+        bool result = sut.Matches(card2);
 
         // Assert
         Assert.False(result);

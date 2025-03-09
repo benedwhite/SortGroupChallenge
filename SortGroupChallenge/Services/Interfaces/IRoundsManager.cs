@@ -1,6 +1,6 @@
 ﻿namespace SortGroupChallenge.Services.Interfaces;
 
-public interface IRoundsCalculator
+public interface IRoundsManager
 {
     bool IsWithinRoundLimit(int round);
 }

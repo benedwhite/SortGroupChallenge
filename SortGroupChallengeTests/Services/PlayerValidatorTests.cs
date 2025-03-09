@@ -11,10 +11,10 @@ public class PlayerValidatorTests
     public void IsValid_ShouldReturnTrue_WhenNumberOfPlayersIsWithinRange(int playerCount)
     {
         // Arrange
-        var validator = PlayerValidator.Create(playerCount);
+        var sut = new PlayerValidator(playerCount);
 
         // Act
-        bool result = validator.IsValid();
+        bool result = sut.IsValid();
 
         // Assert
         Assert.True(result);
@@ -25,10 +25,10 @@ public class PlayerValidatorTests
     {
         // Arrange
         int invalidNumberOfPlayers = Constants.Player.MinPlayerCount - 1;
-        var validator = PlayerValidator.Create(invalidNumberOfPlayers);
+        var sut = new PlayerValidator(invalidNumberOfPlayers);
 
         // Act
-        bool result = validator.IsValid();
+        bool result = sut.IsValid();
 
         // Assert
         Assert.False(result);
@@ -39,10 +39,10 @@ public class PlayerValidatorTests
     {
         // Arrange
         int invalidNumberOfPlayers = Constants.Player.MaxPlayerCount + 1;
-        var validator = PlayerValidator.Create(invalidNumberOfPlayers);
+        var sut = new PlayerValidator(invalidNumberOfPlayers);
 
         // Act
-        bool result = validator.IsValid();
+        bool result = sut.IsValid();
 
         // Assert
         Assert.False(result);

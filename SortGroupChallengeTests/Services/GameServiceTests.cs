@@ -13,16 +13,16 @@ public class GameServiceTests
     {
         // Arrange
         int numberOfRounds = 50;
-        GameService? game = null;
+        GameService? sut = null;
 
         // Act
         Exception exception = Record.Exception(
-            () => game = GameService.CreateGame(
+            () => sut = new GameService(
                 numberOfPlayers,
                 numberOfRounds));
 
         // Assert
-        Assert.NotNull(game);
+        Assert.NotNull(sut);
 
         Assert.Null(exception);
     }
@@ -37,16 +37,16 @@ public class GameServiceTests
     {
         // Arrange
         int numberOfRounds = 50;
-        GameService? game = null;
+        GameService? sut = null;
 
         // Act
         Exception exception = Record.Exception(
-            () => game = GameService.CreateGame(
+            () => sut = new GameService(
                 numberOfPlayers,
                 numberOfRounds));
 
         // Assert
-        Assert.Null(game);
+        Assert.Null(sut);
 
         Assert.IsType<InvalidOperationException>(exception);
         Assert.Equal(
@@ -62,22 +62,31 @@ public class GameServiceTests
         int numberOfRounds = 50;
 
         // Act
-        var game = GameService.CreateGame(numberOfPlayers, numberOfRounds);
+        var sut = new GameService(numberOfPlayers, numberOfRounds);
 
         // Assert
-        Assert.NotNull(game);
+        Assert.NotNull(sut);
     }
 
-    [Fact]
-    public void Play_ShouldRunGameWithoutExceptions()
+    [Theory]
+    [InlineData(2, 1)]
+    [InlineData(3, 1)]
+    [InlineData(4, 1)]
+    [InlineData(2, 20)]
+    [InlineData(3, 20)]
+    [InlineData(4, 20)]
+    [InlineData(2, 100)]
+    [InlineData(3, 100)]
+    [InlineData(4, 1000000)]
+    public void Play_ShouldRunGameWithoutExceptions(
+        int numberOfPlayers,
+        int numberOfRounds)
     {
         // Arrange
-        int numberOfPlayers = 4;
-        int numberOfRounds = 500;
-        var game = GameService.CreateGame(numberOfPlayers, numberOfRounds);
+        var sut = new GameService(numberOfPlayers, numberOfRounds);
 
         // Act
-        Exception exception = Record.Exception(() => game.Play());
+        Exception exception = Record.Exception(() => sut.Play());
 
         // Assert
         Assert.Null(exception);
