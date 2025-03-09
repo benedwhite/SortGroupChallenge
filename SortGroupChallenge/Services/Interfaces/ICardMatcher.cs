@@ -4,5 +4,5 @@ namespace SortGroupChallenge.Services.Interfaces;
 
 public interface ICardMatcher
 {
-    public bool Matches(Card card);
+    bool Matches(Card card);
 }

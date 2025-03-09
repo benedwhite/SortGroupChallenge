@@ -61,7 +61,7 @@ public class CardTests
     public void Create_ShouldSetCorrectSuitAndRank(string suitValue, string rankValue)
     {
         // Arrange & Act
-        Card sut = Card.Create(
+        var sut = Card.Create(
             Suit.Create(suitValue),
             Rank.Create(rankValue)
         );
@@ -86,7 +86,7 @@ public class CardTests
         Card sut = default!;
 
         // Act
-        var exception = Record.Exception(() => sut = Card.Create(suit, rank));
+        Exception exception = Record.Exception(() => sut = Card.Create(suit, rank));
 
         // Assert
         Assert.Null(sut);

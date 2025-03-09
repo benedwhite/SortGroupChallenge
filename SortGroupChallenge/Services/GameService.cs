@@ -1,39 +1,41 @@
-﻿using SortGroupChallenge.Services;
+﻿using SortGroupChallenge.Models;
 using SortGroupChallenge.Services.Interfaces;
 
-namespace SortGroupChallenge.Models;
+namespace SortGroupChallenge.Services;
 
-public sealed class Game
+public sealed class GameService : IGameService
 {
     private readonly Deck _deck;
     private readonly Players _players;
     private readonly Table _table;
+    private readonly int _numberOfRounds;
 
-    private Game(Deck deck, Players players)
+    private GameService(Deck deck, Players players, int numberOfRounds)
     {
         _deck = deck;
         _players = players;
         _table = Table.Create();
+        _numberOfRounds = numberOfRounds;
     }
 
-    public static Game Create(Deck deck, int maxPlayerCount)
+    public static GameService CreateGame(int numberOfPlayers, int numberOfRounds)
     {
-        ArgumentNullException.ThrowIfNull(deck, nameof(deck));
+        IShuffler shuffler = Shuffler.Create();
 
-        Deck shuffledDeck = deck.Shuffle(new Shuffler());
-        Players players = CreatePlayers(maxPlayerCount);
+        Deck shuffledDeck = Deck
+            .Create()
+            .Shuffle(shuffler);
 
-        return new(shuffledDeck, players);
+        Players players = CreatePlayers(numberOfPlayers);
+
+        return new(shuffledDeck, players, numberOfRounds);
     }
 
-    public void Play(
-        IGameRoundService gameRoundService,
-        IRoundsCalculator roundsCalculator,
-        IWinnerAnnouncer winnerAnnouncer)
+    public void Play()
     {
-        ArgumentNullException.ThrowIfNull(gameRoundService, nameof(gameRoundService));
-        ArgumentNullException.ThrowIfNull(roundsCalculator, nameof(roundsCalculator));
-        ArgumentNullException.ThrowIfNull(winnerAnnouncer, nameof(winnerAnnouncer));
+        IGameRoundService gameRoundService = StandardGameRoundService.Create();
+        IRoundsCalculator roundsCalculator = StandardRoundsCalculator.Create(_numberOfRounds);
+        IWinnerAnnouncer winnerAnnouncer = StandardWinnerAnnouncer.Create();
 
         DealCardsToPlayers();
         StartGame(gameRoundService, roundsCalculator, winnerAnnouncer);

@@ -10,7 +10,7 @@ public class ShufflerTests
     public void Shuffle_ShouldShuffleCardsAndChangeOrder()
     {
         // Arrange
-        Shuffler shuffler = new();
+        var shuffler = Shuffler.Create();
 
         var cards = Cards.Create([
             Card.Create(Suit.Create(Constants.Suit.Hearts), Rank.Create(Constants.Rank.Ace)),

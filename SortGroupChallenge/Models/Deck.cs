@@ -24,6 +24,8 @@ public sealed class Deck
 
     public Deck Shuffle(IShuffler shuffler)
     {
+        ArgumentNullException.ThrowIfNull(shuffler, nameof(shuffler));
+
         Cards shuffledCards = shuffler.Shuffle(Cards);
 
         return new(shuffledCards);

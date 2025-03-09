@@ -21,8 +21,8 @@ public sealed class StandardPlayerFactory : IPlayerFactory
     {
         if (!_gameValidator.IsValid())
         {
-            throw new InvalidOperationException($"Player count must be between " +
-                $"{Constants.Player.MinPlayerCount} & {Constants.Player.MaxPlayerCount}.");
+            throw new InvalidOperationException($"Number of players must be between " +
+                $"{Constants.Player.MinPlayerCount} and {Constants.Player.MaxPlayerCount}.");
         }
 
         var playersToCreate = Enumerable

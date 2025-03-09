@@ -5,6 +5,10 @@ namespace SortGroupChallenge.Services;
 
 public sealed class Shuffler : IShuffler
 {
+    private Shuffler() { }
+
+    public static Shuffler Create() => new();
+
     public Cards Shuffle(Cards cards)
     {
         ArgumentNullException.ThrowIfNull(cards, nameof(cards));
