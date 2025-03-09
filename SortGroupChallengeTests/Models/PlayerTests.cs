@@ -14,12 +14,12 @@ public class PlayerTests
 
         // Act
         Exception exception = Record.Exception(() => sut = Player.Create(name!));
-        
+
         // Assert
         Assert.Null(sut);
         Assert.IsType<ArgumentException>(exception);
         Assert.Equal(
-            "The value cannot be an empty string or composed entirely of whitespace. (Parameter 'name')", 
+            "The value cannot be an empty string or composed entirely of whitespace. (Parameter 'name')",
             exception.Message);
     }
 

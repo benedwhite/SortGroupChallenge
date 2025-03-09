@@ -6,7 +6,8 @@ namespace SortGroupChallengeTests.Models;
 
 public class DeckTests
 {
-    private readonly IEnumerable<Card> _cards = [
+    private readonly Cards _cards = Cards.Create
+        ([
             Card.Create(Suit.Create(Constants.Suit.Hearts), Rank.Create(Constants.Rank.Ace)),
             Card.Create(Suit.Create(Constants.Suit.Hearts), Rank.Create(Constants.Rank.Two)),
             Card.Create(Suit.Create(Constants.Suit.Hearts), Rank.Create(Constants.Rank.Three)),
@@ -59,7 +60,7 @@ public class DeckTests
             Card.Create(Suit.Create(Constants.Suit.Spades), Rank.Create(Constants.Rank.Jack)),
             Card.Create(Suit.Create(Constants.Suit.Spades), Rank.Create(Constants.Rank.Queen)),
             Card.Create(Suit.Create(Constants.Suit.Spades), Rank.Create(Constants.Rank.King))
-        ];
+        ]);
 
     [Fact]
     public void Create_ShouldCreateADeckContainingAllCards()
@@ -68,7 +69,7 @@ public class DeckTests
         var sut = Deck.Create();
 
         // Assert
-        Assert.Equal(52, sut.Cards.Count());
+        Assert.Equal(52, sut.Cards.Count);
         Assert.True(sut.Cards.SequenceEqual(_cards));
     }
 
@@ -79,7 +80,7 @@ public class DeckTests
         Deck sut = Deck.Create().Shuffle(new Shuffler());
 
         // Assert
-        Assert.Equal(52, sut.Cards.Count());
+        Assert.Equal(52, sut.Cards.Count);
         Assert.False(sut.Cards.SequenceEqual(_cards));
     }
 }

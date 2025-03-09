@@ -14,7 +14,7 @@ public sealed record Player
         }
 
         _name = name;
-        _hand = Cards.Create();
+        _hand = Cards.Create([]);
     }
 
     public static Player Create(string name)
@@ -26,7 +26,7 @@ public sealed record Player
 
     public override string ToString() => _name;
 
-    public void Pickup(IEnumerable<Card> cards)
+    public void Pickup(Cards cards)
     {
         ArgumentNullException.ThrowIfNull(cards, nameof(cards));
 

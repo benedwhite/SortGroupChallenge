@@ -36,7 +36,7 @@ public class GameTests
     {
         // Arrange
         var deck = Deck.Create();
-        var game = Game.Create(deck, maxPlayerCount: 2);
+        var game = Game.Create(deck, maxPlayerCount: 3);
 
         var mockGameRoundService = new Mock<IGameRoundService>();
         var mockRoundsCalculator = new Mock<IRoundsCalculator>();
@@ -68,7 +68,7 @@ public class GameTests
             It.IsAny<Player>()), Times.Exactly(2));
 
         mockWinnerAnnouncer.Verify(w => w.AnnounceWinnerFrom(
-            It.IsAny<IEnumerable<Player>>()),
+            It.IsAny<Players>()),
             Times.Once());
     }
 }

@@ -4,5 +4,5 @@ namespace SortGroupChallenge.Services.Interfaces;
 
 public interface IWinnerAnnouncer
 {
-    void AnnounceWinnerFrom(IEnumerable<Player> players);
+    void AnnounceWinnerFrom(Players players);
 }

@@ -6,10 +6,10 @@ namespace SortGroupChallenge.Models;
 public sealed class Game
 {
     private readonly Deck _deck;
-    private readonly IEnumerable<Player> _players;
+    private readonly Players _players;
     private readonly Table _table;
 
-    private Game(Deck deck, IEnumerable<Player> players)
+    private Game(Deck deck, Players players)
     {
         _deck = deck;
         _players = players;
@@ -21,7 +21,7 @@ public sealed class Game
         ArgumentNullException.ThrowIfNull(deck, nameof(deck));
 
         Deck shuffledDeck = deck.Shuffle(new Shuffler());
-        IEnumerable<Player> players = CreatePlayers(maxPlayerCount);
+        Players players = CreatePlayers(maxPlayerCount);
 
         return new(shuffledDeck, players);
     }
@@ -39,12 +39,12 @@ public sealed class Game
         StartGame(gameRoundService, roundsCalculator, winnerAnnouncer);
     }
 
-    private static IEnumerable<Player> CreatePlayers(int maxPlayerCount)
+    private static Players CreatePlayers(int maxPlayerCount)
     {
         var playerFactory = StandardPlayerFactory.Create(
             PlayerValidator.Create(maxPlayerCount));
 
-        IEnumerable<Player> players = [.. playerFactory.CreateMany(maxPlayerCount)];
+        Players players = playerFactory.CreateMany(maxPlayerCount);
 
         return players;
     }
@@ -65,8 +65,6 @@ public sealed class Game
 
         while (ShouldPlayRound(roundsCalculator, round))
         {
-            round++;
-
             foreach (Player player in _players)
             {
                 if (!gameRoundService.HasGameEndedAfterTurn(_table, player))
@@ -78,6 +76,8 @@ public sealed class Game
 
                 return;
             }
+
+            round++;
         }
 
         winnerAnnouncer.AnnounceWinnerFrom(_players);

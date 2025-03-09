@@ -6,12 +6,12 @@ namespace SortGroupChallenge.Services;
 public sealed class StandardDealer : IDealer
 {
     private readonly Table _table;
-    private readonly IEnumerable<Player> _players;
+    private readonly Players _players;
     private readonly Deck _deck;
 
     private StandardDealer(
         Table table,
-        IEnumerable<Player> players, 
+        Players players, 
         Deck deck)
     {
         _table = table;
@@ -21,8 +21,8 @@ public sealed class StandardDealer : IDealer
 
     public static StandardDealer Create(
         Table table, 
-        IEnumerable<Player> 
-        players, Deck deck)
+        Players players, 
+        Deck deck)
     {
         ArgumentNullException.ThrowIfNull(table, nameof(table));
         ArgumentNullException.ThrowIfNull(players, nameof(players));
@@ -40,10 +40,12 @@ public sealed class StandardDealer : IDealer
 
         foreach (Player player in _players)
         {
-            player.Pickup(
-                _deck.Cards
-                    .Skip(playerIndex * cardsPerPlayer)
-                    .Take(cardsPerPlayer));
+            var cards = Cards
+                .Create(_deck.Cards
+                .Skip(playerIndex * cardsPerPlayer)
+                .Take(cardsPerPlayer));
+
+            player.Pickup(cards);
 
             playerIndex++;
         }

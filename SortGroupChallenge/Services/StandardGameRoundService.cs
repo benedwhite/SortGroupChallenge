@@ -19,11 +19,11 @@ public sealed class StandardGameRoundService : IGameRoundService
         }
 
         Card playedCard = player.PlayCard();
-        Card? cardOnTable = table.TryPickupCard();
+        Card? topCardOnTable = table.TryPickupCard();
 
         table.AddCard(playedCard);
 
-        HandleSnap(table, player, playedCard, cardOnTable);
+        HandleSnap(table, player, playedCard, topCardOnTable);
 
         return false;
     }

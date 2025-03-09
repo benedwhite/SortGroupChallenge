@@ -29,10 +29,12 @@ public class StandardGameRoundServiceTests
         var player = Player.Create("TestPlayer");
         var table = Table.Create();
 
-        player.Pickup([
+        var cards = Cards.Create([
             Card.Create(
-                Suit.Create(Constants.Suit.Spades), 
+                Suit.Create(Constants.Suit.Spades),
                 Rank.Create(Constants.Rank.Ace))]);
+
+        player.Pickup(cards);
 
         // Act
         bool result = service.HasGameEndedAfterTurn(table, player);
@@ -49,10 +51,12 @@ public class StandardGameRoundServiceTests
         var service = StandardGameRoundService.Create();
         var player = Player.Create("TestPlayer");
 
-        player.Pickup([
+        var cards = Cards.Create([
             Card.Create(
                 Suit.Create(Constants.Suit.Spades),
                 Rank.Create(Constants.Rank.Ace))]);
+
+        player.Pickup(cards);
 
         var table = Table.Create();
 
@@ -76,10 +80,12 @@ public class StandardGameRoundServiceTests
         var service = StandardGameRoundService.Create();
         var player = Player.Create("TestPlayer");
 
-        player.Pickup([
+        var cards = Cards.Create([
             Card.Create(
                 Suit.Create(Constants.Suit.Spades),
                 Rank.Create(Constants.Rank.Ace))]);
+
+        player.Pickup(cards);
 
         var table = Table.Create();
 

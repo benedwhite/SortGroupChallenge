@@ -17,7 +17,7 @@ public sealed class StandardPlayerFactory : IPlayerFactory
         return new(gameValidator);
     }
 
-    public IEnumerable<Player> CreateMany(int numberOfPlayersToCreate)
+    public Players CreateMany(int numberOfPlayersToCreate)
     {
         if (!_gameValidator.IsValid())
         {
@@ -25,9 +25,13 @@ public sealed class StandardPlayerFactory : IPlayerFactory
                 $"{Constants.Player.MinPlayerCount} & {Constants.Player.MaxPlayerCount}.");
         }
 
-        foreach (int index in Enumerable.Range(0, numberOfPlayersToCreate))
-        {
-            yield return Player.Create($"Player {index + 1}");
-        }
+        var playersToCreate = Enumerable
+            .Range(0, numberOfPlayersToCreate)
+            .Select(index => Player.Create($"Player {index + 1}"))
+            .ToList();
+
+        var players = Players.Create(playersToCreate);
+
+        return players;
     }
 }

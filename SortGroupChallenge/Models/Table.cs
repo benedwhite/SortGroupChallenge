@@ -6,7 +6,7 @@ public sealed record Table
 
     private Table()
     {
-        _cards = Cards.Create();
+        _cards = Cards.Create([]);
     }
 
     public static Table Create() => new();

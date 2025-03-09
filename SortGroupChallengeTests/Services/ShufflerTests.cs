@@ -12,7 +12,7 @@ public class ShufflerTests
         // Arrange
         Shuffler shuffler = new();
 
-        IEnumerable<Card> cards = [
+        var cards = Cards.Create([
             Card.Create(Suit.Create(Constants.Suit.Hearts), Rank.Create(Constants.Rank.Ace)),
             Card.Create(Suit.Create(Constants.Suit.Hearts), Rank.Create(Constants.Rank.Two)),
             Card.Create(Suit.Create(Constants.Suit.Hearts), Rank.Create(Constants.Rank.Three)),
@@ -65,13 +65,13 @@ public class ShufflerTests
             Card.Create(Suit.Create(Constants.Suit.Spades), Rank.Create(Constants.Rank.Jack)),
             Card.Create(Suit.Create(Constants.Suit.Spades), Rank.Create(Constants.Rank.Queen)),
             Card.Create(Suit.Create(Constants.Suit.Spades), Rank.Create(Constants.Rank.King))
-        ];
+        ]);
 
         // Act
-        IEnumerable<Card> sut = shuffler.Shuffle(cards);
+        Cards sut = shuffler.Shuffle(cards);
 
         // Assert
-        Assert.Equal(52, sut.Count());
+        Assert.Equal(52, sut.Count);
         Assert.False(sut.SequenceEqual(cards));
     }
 }

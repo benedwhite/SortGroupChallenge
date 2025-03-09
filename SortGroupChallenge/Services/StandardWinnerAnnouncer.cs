@@ -11,7 +11,7 @@ public sealed class StandardWinnerAnnouncer : IWinnerAnnouncer
 
     public static StandardWinnerAnnouncer Create() => new();
 
-    public void AnnounceWinnerFrom(IEnumerable<Player> players)
+    public void AnnounceWinnerFrom(Players players)
     {
         ArgumentNullException.ThrowIfNull(players, nameof(players));
 

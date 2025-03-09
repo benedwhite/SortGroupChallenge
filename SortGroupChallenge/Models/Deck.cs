@@ -4,9 +4,9 @@ namespace SortGroupChallenge.Models;
 
 public sealed class Deck
 {
-    public IEnumerable<Card> Cards { get; }
+    public Cards Cards { get; }
 
-    private Deck(IEnumerable<Card> cards) => Cards = cards;
+    private Deck(Cards cards) => Cards = cards;
 
     public static Deck Create()
     {
@@ -17,15 +17,17 @@ public sealed class Deck
                     Suit.Create(suit),
                     Rank.Create(rank)));
 
-        return new(cards);
+        var pack = Cards.Create(cards);
+
+        return new(pack);
     }
 
     public Deck Shuffle(IShuffler shuffler)
     {
-        IEnumerable<Card> shuffledCards = shuffler.Shuffle(Cards);
+        Cards shuffledCards = shuffler.Shuffle(Cards);
 
         return new(shuffledCards);
     }
 
-    public int Count() => Cards.Count();
+    public int Count() => Cards.Count;
 }

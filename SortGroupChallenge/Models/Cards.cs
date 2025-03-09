@@ -2,7 +2,7 @@
 
 public sealed class Cards : Stack<Card>
 {
-    private Cards() { }
+    private Cards(IEnumerable<Card> cards) : base(cards) { }
 
-    public static Cards Create() => new();
+    public static Cards Create(IEnumerable<Card> cards) => new(cards);
 }
