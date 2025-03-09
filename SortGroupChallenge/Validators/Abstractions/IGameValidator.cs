@@ -1,4 +1,4 @@
-﻿namespace SortGroupChallenge.Services.Interfaces;
+﻿namespace SortGroupChallenge.Validators.Abstractions;
 
 public interface IGameValidator
 {

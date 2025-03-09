@@ -1,9 +1,9 @@
 ﻿using SortGroupChallenge.Models;
-using SortGroupChallenge.Services.Interfaces;
+using SortGroupChallenge.Services.Abstractions;
 
 namespace SortGroupChallenge.Services;
 
-public sealed record WinnerAnnouncer : IWinnerAnnouncer
+public sealed record WinnerAnnouncerService : IWinnerAnnouncerService
 {
     public event EventHandler<Player?>? PlayerWon;
 

@@ -1,5 +1,5 @@
 ﻿using System.Collections.ObjectModel;
-using SortGroupChallenge.Services.Interfaces;
+using SortGroupChallenge.Services.Abstractions;
 
 namespace SortGroupChallenge.Models;
 
@@ -9,7 +9,7 @@ public sealed record Deck(Cards Cards)
 
     public int Count => Cards.Count;
 
-    public Deck Shuffle(IShuffler shuffler)
+    public Deck Shuffle(IShufflerService shuffler)
     {
         ArgumentNullException.ThrowIfNull(shuffler, nameof(shuffler));
 

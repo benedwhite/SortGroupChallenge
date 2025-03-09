@@ -1,9 +1,9 @@
 ﻿using SortGroupChallenge.Models;
-using SortGroupChallenge.Services.Interfaces;
+using SortGroupChallenge.Services.Abstractions;
 
 namespace SortGroupChallenge.Services;
 
-public sealed record Shuffler : IShuffler
+public sealed record ShufflerService : IShufflerService
 {
     public Cards Shuffle(Cards cards)
     {

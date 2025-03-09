@@ -1,9 +1,9 @@
 ﻿using SortGroupChallenge.Models;
-using SortGroupChallenge.Services.Interfaces;
+using SortGroupChallenge.Services.Abstractions;
 
 namespace SortGroupChallenge.Services;
 
-public record RankMatcher(Card Card) : ICardMatcher
+public record RankMatcherService(Card Card) : ICardMatcherService
 {
     public bool Matches(Card card)
     {

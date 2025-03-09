@@ -1,5 +1,5 @@
 ﻿using SortGroupChallenge.Models;
-using SortGroupChallenge.Services.Interfaces;
+using SortGroupChallenge.Services.Abstractions;
 
 namespace SortGroupChallenge.Services;
 
@@ -31,7 +31,7 @@ public sealed record GameRoundService : IGameRoundService
         Card? topCardOnTable)
     {
         bool snap = topCardOnTable is not null
-            && playedCard.Matches(new RankMatcher(topCardOnTable));
+            && playedCard.Matches(new RankMatcherService(topCardOnTable));
 
         if (!snap)
         {

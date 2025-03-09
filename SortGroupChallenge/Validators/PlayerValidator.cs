@@ -1,6 +1,6 @@
-﻿using SortGroupChallenge.Services.Interfaces;
+﻿using SortGroupChallenge.Validators.Abstractions;
 
-namespace SortGroupChallenge.Services;
+namespace SortGroupChallenge.Validators;
 
 public sealed record PlayerValidator(int NumberOfPlayersToCreate) : IGameValidator
 {

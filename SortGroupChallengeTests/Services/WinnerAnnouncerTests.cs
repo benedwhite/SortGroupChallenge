@@ -26,7 +26,7 @@ public class WinnerAnnouncerTests
             .Last()
             .Pickup(new Cards([]));
 
-        var sut = new WinnerAnnouncer();
+        var sut = new WinnerAnnouncerService();
 
         Player? announcedWinner = null;
 
@@ -64,7 +64,7 @@ public class WinnerAnnouncerTests
                         new Suit(Constants.Suit.Hearts),
                         new Rank(Constants.Rank.Ten))]));
 
-        var sut = new WinnerAnnouncer();
+        var sut = new WinnerAnnouncerService();
 
         Player? announcedWinner = null;
 
@@ -81,7 +81,7 @@ public class WinnerAnnouncerTests
     public void AnnounceWinnerFrom_ShouldThrowArgumentNullException_WhenPlayersIsNull()
     {
         // Arrange
-        var announcer = new WinnerAnnouncer();
+        var announcer = new WinnerAnnouncerService();
 
         // Act & Assert
         Assert.Throws<ArgumentNullException>(() => announcer.AnnounceWinnerFrom(null!));

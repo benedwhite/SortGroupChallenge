@@ -1,9 +1,12 @@
 ﻿using SortGroupChallenge.Models;
-using SortGroupChallenge.Services.Interfaces;
+using SortGroupChallenge.Services.Abstractions;
 
 namespace SortGroupChallenge.Services;
 
-public sealed record Dealer(Table Table, Players Players, Deck Deck) : IDealer
+public sealed record DealerService(
+    Table Table, 
+    Players Players, 
+    Deck Deck) : IDealerService
 {
     public void Deal()
     {

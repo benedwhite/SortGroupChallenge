@@ -14,7 +14,7 @@ public class RankMatcherTests
         var card = new Card(new Suit(Constants.Suit.Hearts), rank);
 
         // Act
-        var rankMatcher = new RankMatcher(card);
+        var rankMatcher = new RankMatcherService(card);
 
         // Assert
         Assert.NotNull(rankMatcher);
@@ -26,7 +26,7 @@ public class RankMatcherTests
         // Arrange
         var rank = new Rank(Constants.Rank.Ace);
         var card = new Card(new Suit(Constants.Suit.Hearts), rank);
-        var sut = new RankMatcher(card);
+        var sut = new RankMatcherService(card);
 
         // Act & Assert
         Assert.Throws<ArgumentNullException>(() => sut.Matches(null!));
@@ -39,7 +39,7 @@ public class RankMatcherTests
         var rank = new Rank(Constants.Rank.Ace);
         var card1 = new Card(new Suit(Constants.Suit.Hearts), rank);
         var card2 = new Card(new Suit(Constants.Suit.Diamonds), rank);
-        var sut = new RankMatcher(card1);
+        var sut = new RankMatcherService(card1);
 
         // Act
         bool result = sut.Matches(card2);
@@ -56,7 +56,7 @@ public class RankMatcherTests
         var rank2 = new Rank(Constants.Rank.King);
         var card1 = new Card(new Suit(Constants.Suit.Hearts), rank1);
         var card2 = new Card(new Suit(Constants.Suit.Diamonds), rank2);
-        var sut = new RankMatcher(card1);
+        var sut = new RankMatcherService(card1);
 
         // Act
         bool result = sut.Matches(card2);

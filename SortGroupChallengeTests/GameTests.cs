@@ -1,8 +1,8 @@
-﻿using SortGroupChallenge.Services;
+﻿using SortGroupChallenge;
 
-namespace SortGroupChallengeTests.Services;
+namespace SortGroupChallengeTests;
 
-public class GameServiceTests
+public class GameTests
 {
     [Theory]
     [InlineData(2)]
@@ -13,11 +13,11 @@ public class GameServiceTests
     {
         // Arrange
         int numberOfRounds = 50;
-        GameService? sut = null;
+        Game? sut = null;
 
         // Act
         Exception exception = Record.Exception(
-            () => sut = new GameService(
+            () => sut = new Game(
                 numberOfPlayers,
                 numberOfRounds));
 
@@ -37,11 +37,11 @@ public class GameServiceTests
     {
         // Arrange
         int numberOfRounds = 50;
-        GameService? sut = null;
+        Game? sut = null;
 
         // Act
         Exception exception = Record.Exception(
-            () => sut = new GameService(
+            () => sut = new Game(
                 numberOfPlayers,
                 numberOfRounds));
 
@@ -62,7 +62,7 @@ public class GameServiceTests
         int numberOfRounds = 50;
 
         // Act
-        var sut = new GameService(numberOfPlayers, numberOfRounds);
+        var sut = new Game(numberOfPlayers, numberOfRounds);
 
         // Assert
         Assert.NotNull(sut);
@@ -83,7 +83,7 @@ public class GameServiceTests
         int numberOfRounds)
     {
         // Arrange
-        var sut = new GameService(numberOfPlayers, numberOfRounds);
+        var sut = new Game(numberOfPlayers, numberOfRounds);
 
         // Act
         Exception exception = Record.Exception(() => sut.Play());

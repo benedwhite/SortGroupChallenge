@@ -1,7 +1,8 @@
-﻿using SortGroupChallenge.Models;
-using SortGroupChallenge.Services.Interfaces;
+﻿using SortGroupChallenge.Factories.Abstractions;
+using SortGroupChallenge.Models;
+using SortGroupChallenge.Validators.Abstractions;
 
-namespace SortGroupChallenge.Services;
+namespace SortGroupChallenge.Factories;
 
 public sealed record PlayerFactory(IGameValidator GameValidator) : IPlayerFactory
 {

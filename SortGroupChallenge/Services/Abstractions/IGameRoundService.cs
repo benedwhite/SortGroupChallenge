@@ -1,6 +1,6 @@
 ﻿using SortGroupChallenge.Models;
 
-namespace SortGroupChallenge.Services.Interfaces;
+namespace SortGroupChallenge.Services.Abstractions;
 
 public interface IGameRoundService
 {

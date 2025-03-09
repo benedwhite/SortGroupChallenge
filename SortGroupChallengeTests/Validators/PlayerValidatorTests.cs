@@ -1,7 +1,7 @@
 ﻿using SortGroupChallenge;
-using SortGroupChallenge.Services;
+using SortGroupChallenge.Validators;
 
-namespace SortGroupChallengeTests.Services;
+namespace SortGroupChallengeTests.Validators;
 
 public class PlayerValidatorTests
 {

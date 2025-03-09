@@ -76,7 +76,7 @@ public class DeckTests
     public void Shuffle_ShouldShuffleCardsAndChangeOrder()
     {
         // Arrange & Act
-        Deck sut = new Deck().Shuffle(new Shuffler());
+        Deck sut = new Deck().Shuffle(new ShufflerService());
 
         // Assert
         Assert.Equal(52, sut.Cards.Count);
