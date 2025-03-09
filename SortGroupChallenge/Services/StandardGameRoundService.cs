@@ -32,10 +32,10 @@ public sealed class StandardGameRoundService : IGameRoundService
         Table table, 
         Player player, 
         Card playedCard, 
-        Card? cardOnTable)
+        Card? topCardOnTable)
     {
-        bool snap = cardOnTable is not null
-            && playedCard.Matches(RankMatcher.Create(cardOnTable));
+        bool snap = topCardOnTable is not null
+            && playedCard.Matches(RankMatcher.Create(topCardOnTable));
 
         if (!snap)
         {
