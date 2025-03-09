@@ -13,7 +13,7 @@ public class PlayerTests
         Player sut = default!;
 
         // Act
-        var exception = Record.Exception(() => sut = Player.Create(name!));
+        Exception exception = Record.Exception(() => sut = Player.Create(name!));
         
         // Assert
         Assert.Null(sut);
@@ -30,7 +30,7 @@ public class PlayerTests
         Player sut = default!;
 
         // Act
-        var exception = Record.Exception(() => sut = Player.Create(null!));
+        Exception exception = Record.Exception(() => sut = Player.Create(null!));
 
         // Assert
         Assert.Null(sut);

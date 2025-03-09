@@ -2,5 +2,5 @@
 
 public interface IGameValidator
 {
-    public bool IsValid();
+    bool IsValid();
 }

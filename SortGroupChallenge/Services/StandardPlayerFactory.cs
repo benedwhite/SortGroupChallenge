@@ -25,9 +25,9 @@ public sealed class StandardPlayerFactory : IPlayerFactory
                 $"{Constants.Player.MinPlayerCount} & {Constants.Player.MaxPlayerCount}.");
         }
 
-        foreach (var i in Enumerable.Range(0, numberOfPlayersToCreate))
+        foreach (int index in Enumerable.Range(0, numberOfPlayersToCreate))
         {
-            yield return Player.Create($"Player {i + 1}");
+            yield return Player.Create($"Player {index + 1}");
         }
     }
 }

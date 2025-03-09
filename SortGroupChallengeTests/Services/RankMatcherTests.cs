@@ -49,7 +49,7 @@ public class RankMatcherTests
         var rankMatcher = RankMatcher.Create(card1);
 
         // Act
-        var result = rankMatcher.Matches(card2);
+        bool result = rankMatcher.Matches(card2);
 
         // Assert
         Assert.True(result);
@@ -66,7 +66,7 @@ public class RankMatcherTests
         var rankMatcher = RankMatcher.Create(card1);
 
         // Act
-        var result = rankMatcher.Matches(card2);
+        bool result = rankMatcher.Matches(card2);
 
         // Assert
         Assert.False(result);

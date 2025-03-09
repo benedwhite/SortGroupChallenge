@@ -28,7 +28,7 @@ public sealed class StandardGameRoundService : IGameRoundService
 
         table.Enqueue(playedCard);
 
-        var snap = cardOnTable is not null
+        bool snap = cardOnTable is not null
             && playedCard.Matches(RankMatcher.Create(cardOnTable));
 
         if (snap)

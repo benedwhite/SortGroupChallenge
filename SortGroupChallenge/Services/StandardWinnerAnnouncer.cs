@@ -15,7 +15,7 @@ public sealed class StandardWinnerAnnouncer : IWinnerAnnouncer
     {
         ArgumentNullException.ThrowIfNull(players, nameof(players));
 
-        var playersGroupedByScore = players
+        IGrouping<int, Player>? playersGroupedByScore = players
             .GroupBy(p => p.HandCount())
             .OrderByDescending(g => g.Key)
             .FirstOrDefault();

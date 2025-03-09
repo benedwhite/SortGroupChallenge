@@ -68,7 +68,7 @@ public class ShufflerTests
         ];
 
         // Act
-        var sut = shuffler.Shuffle(cards);
+        IEnumerable<Card> sut = shuffler.Shuffle(cards);
 
         // Assert
         Assert.Equal(52, sut.Count());

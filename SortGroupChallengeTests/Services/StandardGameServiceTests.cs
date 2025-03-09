@@ -15,7 +15,7 @@ public class StandardGameRoundServiceTests
         var table = new Queue<Card>();
 
         // Act
-        var result = service.HasGameEndedAfterTurn(table, player);
+        bool result = service.HasGameEndedAfterTurn(table, player);
 
         // Assert
         Assert.True(result);
@@ -35,7 +35,7 @@ public class StandardGameRoundServiceTests
                 Rank.Create(Constants.Rank.Ace))]);
 
         // Act
-        var result = service.HasGameEndedAfterTurn(table, player);
+        bool result = service.HasGameEndedAfterTurn(table, player);
 
         // Assert
         Assert.False(result);
@@ -61,7 +61,7 @@ public class StandardGameRoundServiceTests
             Rank.Create(Constants.Rank.Ace)));
 
         // Act
-        var result = service.HasGameEndedAfterTurn(table, player);
+        bool result = service.HasGameEndedAfterTurn(table, player);
 
         // Assert
         Assert.Equal(2, player.HandCount());
@@ -88,7 +88,7 @@ public class StandardGameRoundServiceTests
             Rank.Create(Constants.Rank.Ten)));
 
         // Act
-        var result = service.HasGameEndedAfterTurn(table, player);
+        bool result = service.HasGameEndedAfterTurn(table, player);
 
         // Assert
         Assert.False(result);
